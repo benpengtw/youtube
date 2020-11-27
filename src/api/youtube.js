@@ -3,14 +3,19 @@ import axios from "axios";
 export function listVideo(query) {
   const data = {
     apikey: query.apikey,
+    //channelId: "UCMUnInmOkrWN4gof9KlhNmQ",
+    channelId: "yMCWqeroXnc",
   };
-  console.log("UU", data.apikey);
-  return axios({
-    url:
-      "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=US&key=" +
-      data.apikey,
-    method: "get",
-  });
+
+  return axios.get(
+    "https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails",
+    {
+      params: {
+        id: data.channelId,
+        key: data.apikey,
+      },
+    },
+  );
 
   //   return axios({
   //     url: "https://reqres.in/api/users?page=2",
