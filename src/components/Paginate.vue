@@ -25,9 +25,9 @@
         v-html="prevText"
       ></a>
     </li>
-
     <li
       v-for="page in pages"
+      :key="page.index"
       :class="[
         pageClass,
         page.selected ? activeClass : '',
@@ -98,7 +98,7 @@
       tabindex="0"
       v-html="prevText"
     ></a>
-    <template v-for="page in pages">
+    <!-- <template v-for="page in pages">
       <a
         v-if="page.breakView"
         :class="[
@@ -127,7 +127,7 @@
         tabindex="0"
         >{{ page.content }}</a
       >
-    </template>
+    </template> -->
     <a
       v-if="!(lastPageSelected() && hidePrevNext)"
       @click="nextPage()"
@@ -166,7 +166,7 @@
       },
       pageRange: {
         type: Number,
-        default: 3,
+        default: 1,
       },
       marginPages: {
         type: Number,
@@ -257,69 +257,16 @@
       },
       pages: function() {
         let items = {};
-        if (this.pageCount <= this.pageRange) {
-          for (let index = 0; index < this.pageCount; index++) {
-            let page = {
-              index: index,
-              content: index + 1,
-              selected: index === this.selected - 1,
-            };
-            items[index] = page;
-          }
-        } else {
-          const halfPageRange = Math.floor(this.pageRange / 2);
-          let setPageItem = (index) => {
-            let page = {
-              index: index,
-              content: index + 1,
-              selected: index === this.selected - 1,
-            };
-            items[index] = page;
+        let setPageItem = (index) => {
+          let page = {
+            index: index,
+            content: index + 1,
+            selected: index === this.selected - 1,
           };
-          let setBreakView = (index) => {
-            let breakView = {
-              disabled: true,
-              breakView: true,
-            };
-            items[index] = breakView;
-          };
-          // 1st - loop thru low end of margin pages
-          for (let i = 0; i < this.marginPages; i++) {
-            setPageItem(i);
-          }
-          // 2nd - loop thru selected range
-          let selectedRangeLow = 0;
-          if (this.selected - halfPageRange > 0) {
-            selectedRangeLow = this.selected - 1 - halfPageRange;
-          }
-          let selectedRangeHigh = selectedRangeLow + this.pageRange - 1;
-          if (selectedRangeHigh >= this.pageCount) {
-            selectedRangeHigh = this.pageCount - 1;
-            selectedRangeLow = selectedRangeHigh - this.pageRange + 1;
-          }
-          for (
-            let i = selectedRangeLow;
-            i <= selectedRangeHigh && i <= this.pageCount - 1;
-            i++
-          ) {
-            setPageItem(i);
-          }
-          // Check if there is breakView in the left of selected range
-          if (selectedRangeLow > this.marginPages) {
-            setBreakView(selectedRangeLow - 1);
-          }
-          // Check if there is breakView in the right of selected range
-          if (selectedRangeHigh + 1 < this.pageCount - this.marginPages) {
-            setBreakView(selectedRangeHigh + 1);
-          }
-          // 3rd - loop thru high end of margin pages
-          for (
-            let i = this.pageCount - 1;
-            i >= this.pageCount - this.marginPages;
-            i--
-          ) {
-            setPageItem(i);
-          }
+          items[index] = page;
+        };
+        for (let i = 0; i < this.pageCount; i++) {
+          setPageItem(i);
         }
         return items;
       },

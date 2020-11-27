@@ -2,8 +2,8 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <paginate
-      :page-count="20"
-      :page-range="3"
+      :page-count="10"
+      :page-range="1"
       :margin-pages="2"
       :click-handler="clickCallback"
       :prev-text="'Prev'"
@@ -17,27 +17,44 @@
 
 <script>
   import Paginate from "./components/Paginate.vue";
-
+  import { listVideo } from "@/api/youtube";
   export default {
     name: "App",
     components: {
       Paginate,
     },
+    data() {
+      return {
+        queryParams: {
+          pageNum: 1,
+          pageSize: 10,
+          playerAcc: "",
+          apikey: "AIzaSyDp-djtLo7TS0_LE_3d44NBRT2jFGbD56Q",
+        },
+      };
+    },
+    created() {
+      this.getList();
+    },
     methods: {
       clickCallback(pageNum) {
         console.log(pageNum);
+      },
+      getList() {
+        listVideo(this.queryParams).then((response) => {
+          console.log("qq", response);
+          this.playerList = response.rows;
+          this.total = response.total;
+          this.loading = false;
+        });
       },
     },
   };
 </script>
 
-<style>
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+<style lang="css">
+  .pagination {
+  }
+  .page-item {
   }
 </style>
