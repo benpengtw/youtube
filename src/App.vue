@@ -12,7 +12,7 @@
       </div>
     </div>
     <paginate
-      :page-count="10"
+      :page-count="9"
       :click-handler="clickCallback"
       :prev-text="'Prev'"
       :next-text="'Next'"
@@ -33,13 +33,21 @@ export default {
   },
   data() {
     return {
+      pageNum: 1,
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
         playerAcc: "",
         apikey: "AIzaSyDp-djtLo7TS0_LE_3d44NBRT2jFGbD56Q",
       },
       postList: [
+        {
+          title: "Vue.js",
+          link: "https://vuejs.org/",
+          description: "Chris",
+          img: "https://vuejs.org//images/logo.png",
+          duration: "18:52",
+        },
+      ],
+      postListOrigin: [
         {
           title: "Vue.js",
           link: "https://vuejs.org/",
@@ -56,12 +64,15 @@ export default {
   methods: {
     clickCallback(pageNum) {
       console.log(pageNum);
-      console.log(this.postList);
+      this.postList = this.postListOrigin.slice(
+        (pageNum - 1) * 12,
+        pageNum * 12
+      );
     },
     getList() {
       listVideo(this.queryParams).then((response) => {
         console.log("qq", response);
-        this.postList = response.map((element) => {
+        this.postListOrigin = response.map((element) => {
           const newPostList = {
             img: element.snippet.thumbnails.medium.url,
             title: element.snippet.title,
@@ -70,6 +81,7 @@ export default {
           };
           return newPostList;
         });
+        this.postList = this.postListOrigin.slice(0, 12);
       });
     },
   },
