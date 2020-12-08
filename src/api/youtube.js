@@ -3,22 +3,42 @@ import axios from "axios";
 export function listVideo(query) {
   const data = {
     apikey: query.apikey,
-    //channelId: "UCMUnInmOkrWN4gof9KlhNmQ",
-    channelId: "yMCWqeroXnc",
+    channelId: "jeqH4eMGjhY",
+    part: "snippet,contentDetails,status",
+    maxResults:50,
+    playlist:"UUMUnInmOkrWN4gof9KlhNmQ"
   };
 
   return axios.get(
-    "https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails",
+    "https://youtube.googleapis.com/youtube/v3/playlistItems",
     {
       params: {
-        id: data.channelId,
+        part: data.part,
+        playlistId: data.playlist,
         key: data.apikey,
+        maxResults:data.maxResults
       },
     },
-  );
+  )
+//Results 100，
+  .then(function (response) {
+    const listPage1=response.data.items
+      return axios.get(
+        "https://youtube.googleapis.com/youtube/v3/playlistItems",
+        {
+          params: {
+            part: data.part,
+            playlistId: data.playlist,
+            key: data.apikey,
+            maxResults:data.maxResults,
+            pagetoken:response.data.nextPageToken
 
-  //   return axios({
-  //     url: "https://reqres.in/api/users?page=2",
-  //     method: "get",
-  //   });
+          },
+        },
+      )
+      .then(function (response) {
+          const listPage2=response.data.items
+          return listPage1.concat(listPage2)
+      }) 
+  })
 }

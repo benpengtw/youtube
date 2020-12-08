@@ -43,9 +43,9 @@
       getList() {
         listVideo(this.queryParams).then((response) => {
           console.log("qq", response);
-          this.playerList = response.rows;
-          this.total = response.total;
-          this.loading = false;
+          // this.playerList = response.rows;
+          // this.total = response.total;
+          // this.loading = false;
         });
       },
     },
