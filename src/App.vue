@@ -5,15 +5,14 @@
       <div class="card" v-for="post in postList" :key="post.index">
         <a v-bind:href="post.link" target="_blank">
           <img v-bind:src="post.img" />
-          <small>posted by: {{ post.author }}</small>
           {{ post.title }}
+          <small>{{ post.duration }}</small>
+          <small>{{ post.duration }}</small>
         </a>
       </div>
     </div>
     <paginate
       :page-count="10"
-      :page-range="1"
-      :margin-pages="2"
       :click-handler="clickCallback"
       :prev-text="'Prev'"
       :next-text="'Next'"
@@ -44,74 +43,9 @@ export default {
         {
           title: "Vue.js",
           link: "https://vuejs.org/",
-          author: "Chris",
+          description: "Chris",
           img: "https://vuejs.org//images/logo.png",
-        },
-        {
-          title: "Vue.js",
-          link: "https://vuejs.org/",
-          author: "Chris",
-          img: "https://vuejs.org//images/logo.png",
-        },
-        {
-          title: "Vue.js",
-          link: "https://vuejs.org/",
-          author: "Chris",
-          img: "https://vuejs.org//images/logo.png",
-        },
-        {
-          title: "Vue.js",
-          link: "https://vuejs.org/",
-          author: "Chris",
-          img: "https://vuejs.org//images/logo.png",
-        },
-        {
-          title: "Vue.js",
-          link: "https://vuejs.org/",
-          author: "Chris",
-          img: "https://vuejs.org//images/logo.png",
-        },
-        {
-          title: "Vue.js",
-          link: "https://vuejs.org/",
-          author: "Chris",
-          img: "https://vuejs.org//images/logo.png",
-        },
-        {
-          title: "Vue.js",
-          link: "https://vuejs.org/",
-          author: "Chris",
-          img: "https://vuejs.org//images/logo.png",
-        },
-        {
-          title: "Vue.js",
-          link: "https://vuejs.org/",
-          author: "Chris",
-          img: "https://vuejs.org//images/logo.png",
-        },
-        {
-          title: "Vue.js",
-          link: "https://vuejs.org/",
-          author: "Chris",
-          img: "https://vuejs.org//images/logo.png",
-        },
-        {
-          title: "Vue.js",
-          link: "https://vuejs.org/",
-          author: "Chris",
-          img: "https://vuejs.org//images/logo.png",
-        },
-        {
-          title: "Vue.js",
-          link: "https://vuejs.org/",
-          author: "Chris",
-          img: "https://vuejs.org//images/logo.png",
-        },
-        {
-          title: "Vue.js",
-          link: "https://vuejs.org/",
-          author: "Chris",
-          img: "https://vuejs.org//images/logo.png",
+          duration: "18:52",
         },
       ],
     };
@@ -122,13 +56,20 @@ export default {
   methods: {
     clickCallback(pageNum) {
       console.log(pageNum);
+      console.log(this.postList);
     },
     getList() {
       listVideo(this.queryParams).then((response) => {
         console.log("qq", response);
-        // this.playerList = response.rows;
-        // this.total = response.total;
-        // this.loading = false;
+        this.postList = response.map((element) => {
+          const newPostList = {
+            img: element.snippet.thumbnails.medium.url,
+            title: element.snippet.title,
+            description: element.snippet.description,
+            duration: element.contentDetails.duration,
+          };
+          return newPostList;
+        });
       });
     },
   },
@@ -154,7 +95,7 @@ div#app {
 
   .wrapper {
     display: flex;
-    max-width: 444px;
+    max-width: 1400px;
     flex-wrap: wrap;
     padding-top: 12px;
   }
@@ -162,7 +103,7 @@ div#app {
   .card {
     box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px,
       rgba(0, 0, 0, 0.117647) 0px 1px 4px;
-    max-width: 124px;
+    max-width: 400px;
     margin: 12px;
     transition: 0.15s all ease-in-out;
     &:hover {
