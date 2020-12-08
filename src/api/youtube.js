@@ -3,10 +3,10 @@ import axios from "axios";
 export function listVideo(query) {
   const data = {
     apikey: query.apikey,
-    channelId: "jeqH4eMGjhY",
+    channelId: "yB9YtWk2EXI",
     part: "snippet,contentDetails,status",
-    maxResults:50,
-    playlist:"UUMUnInmOkrWN4gof9KlhNmQ"
+    maxResults: 50,
+    playlist: "UUj_z-Zeqk8LfwVxx0MUdL-Q"
   };
 
   return axios.get(
@@ -16,13 +16,13 @@ export function listVideo(query) {
         part: data.part,
         playlistId: data.playlist,
         key: data.apikey,
-        maxResults:data.maxResults
+        maxResults: data.maxResults
       },
     },
   )
-//Results 100，
-  .then(function (response) {
-    const listPage1=response.data.items
+    //Results 100，
+    .then(function (response) {
+      const listPage1 = response.data.items
       return axios.get(
         "https://youtube.googleapis.com/youtube/v3/playlistItems",
         {
@@ -30,15 +30,15 @@ export function listVideo(query) {
             part: data.part,
             playlistId: data.playlist,
             key: data.apikey,
-            maxResults:data.maxResults,
-            pagetoken:response.data.nextPageToken
+            maxResults: data.maxResults,
+            pagetoken: response.data.nextPageToken
 
           },
         },
       )
-      .then(function (response) {
-          const listPage2=response.data.items
+        .then(function (response) {
+          const listPage2 = response.data.items
           return listPage1.concat(listPage2)
-      }) 
-  })
+        })
+    })
 }
