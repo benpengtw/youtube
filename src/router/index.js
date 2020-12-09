@@ -14,12 +14,12 @@ const routes = [
     },
     {
         path: '/player',
-        name: 'player',
+        name: 'Player',
         component: Player,
     },
     {
         path: '/favorite',
-        name: 'favorite',
+        name: 'Favorite',
         component: Favorite,
     },
 

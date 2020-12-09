@@ -1,6 +1,6 @@
 const compressionPlugin = require("compression-webpack-plugin");
 const path = require("path");
-
+const webpack = require('webpack');
 module.exports = {
   productionSourceMap: false,
 
@@ -31,6 +31,10 @@ module.exports = {
       config.optimization.minimizer[0].options.terserOptions.compress.pure_funcs = [
         "console.log",
       ];
+      return {
+        plugins: [
+          new webpack.ContextReplacementPlugin(/moment[/\\]locale$/)]
+      }
     }
   },
   chainWebpack: (config) => {

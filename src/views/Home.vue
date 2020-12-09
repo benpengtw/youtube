@@ -1,14 +1,18 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="@/assets/logo.png" />
     <div class="wrapper">
       <div class="card" v-for="post in postList" :key="post.index">
-        <router-link to="/player">
+        <router-link
+          :to="{
+            name: 'Player',
+            params: { title: post.title, description: post.description },
+          }"
+        >
           <a v-bind:href="post.link" target="_blank">
             <img v-bind:src="post.img || loadingIcon" />
             {{ post.title }}
-            <small>{{ post.duration }}</small>
-            <small>{{ post.duration }}</small>
+            <small>影片長度 {{ post.duration }}</small>
+            <small>影片描述 {{ post.description }}</small>
           </a>
         </router-link>
       </div>
@@ -28,6 +32,8 @@
 <script>
 import Paginate from "@/components/Paginate.vue";
 import { listVideo } from "@/api/youtube";
+import moment from "moment";
+import "moment-duration-format";
 export default {
   name: "Home",
   components: {
@@ -45,18 +51,18 @@ export default {
         {
           title: "Please Wait...",
           link: "",
-          description: "Ben",
+          description: "",
           img: "",
-          duration: "18:52",
+          duration: "",
         },
       ],
       postListOrigin: [
         {
           title: "Please Wait...",
           link: "",
-          description: "Ben",
+          description: "",
           img: "",
-          duration: "18:52",
+          duration: "",
         },
       ],
     };
@@ -80,7 +86,9 @@ export default {
             img: element.snippet.thumbnails.medium.url,
             title: element.snippet.title,
             description: element.snippet.description,
-            duration: element.contentDetails.duration,
+            duration: moment
+              .duration(element.contentDetails.duration)
+              .format("HH:mm:ss", { trim: false }),
           };
           return newPostList;
         });

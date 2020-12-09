@@ -1,6 +1,9 @@
 <template>
   <div>
-    <p>yuyuyuyu</p>
+    <p>title</p>
+    <p>{{ $route.params.title }}</p>
+    <p>description</p>
+    <p>{{ $route.params.description }}</p>
     <video-player :options="videoOptions" />
   </div>
 </template>
@@ -10,6 +13,7 @@ import VideoPlayer from "@/components/VideoPlayer.vue";
 
 export default {
   name: "Player",
+
   components: {
     VideoPlayer,
   },
