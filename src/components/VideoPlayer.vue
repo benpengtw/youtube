@@ -1,38 +1,49 @@
 <template>
-    <div>
-        <p>fghfghfgh</p>
-        <video ref="videoPlayer" class="video-js"></video>
-    </div>
+  <div>
+    <p>fghfghfgh</p>
+    <video ref="videoPlayer" class="video-js"></video>
+  </div>
 </template>
 
 <script>
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
 
 export default {
-    name: "VideoPlayer",
-    props: {
-        options: {
-            type: Object,
-            default() {
-                return {};
-            }
-        }
+  name: "VideoPlayer",
+  props: {
+    options: {
+      type: Object,
+      default() {
+        return {};
+      },
     },
-    data() {
-        return {
-            player: null
-        }
-    },
-    mounted() {
-        this.player = videojs(this.$refs.videoPlayer, this.options, function onPlayerReady() {
-            console.log('onPlayerReady', this);
-        })
-    },
-    beforeDestroy() {
-        if (this.player) {
-            this.player.dispose()
-        }
+  },
+  data() {
+    return {
+      player: null,
+    };
+  },
+  mounted() {
+    this.player = videojs(
+      this.$refs.videoPlayer,
+      this.options,
+      function onPlayerReady() {
+        console.log("onPlayerReady", this);
+      }
+    );
+  },
+  beforeDestroy() {
+    if (this.player) {
+      this.player.dispose();
     }
-}
+  },
+};
 </script>
+
+<style lang="less" scoped>
+.video_container .video-js {
+  width: "1280px";
+  height: "720px";
+}
+</style>
