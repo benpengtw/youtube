@@ -3,12 +3,14 @@
     <img alt="Vue logo" src="@/assets/logo.png" />
     <div class="wrapper">
       <div class="card" v-for="post in postList" :key="post.index">
-        <a v-bind:href="post.link" target="_blank">
-          <img v-bind:src="post.img" />
-          {{ post.title }}
-          <small>{{ post.duration }}</small>
-          <small>{{ post.duration }}</small>
-        </a>
+        <router-link to="/player">
+          <a v-bind:href="post.link" target="_blank">
+            <img v-bind:src="post.img || loadingIcon" />
+            {{ post.title }}
+            <small>{{ post.duration }}</small>
+            <small>{{ post.duration }}</small>
+          </a>
+        </router-link>
       </div>
     </div>
     <paginate
@@ -34,6 +36,7 @@ export default {
   data() {
     return {
       pageNum: 1,
+      loadingIcon: require("@/assets/loading.gif"),
       queryParams: {
         playerAcc: "",
         apikey: "AIzaSyDp-djtLo7TS0_LE_3d44NBRT2jFGbD56Q",
@@ -43,7 +46,7 @@ export default {
           title: "Please Wait...",
           link: "",
           description: "Ben",
-          img: "https://vuejs.org//images/logo.png",
+          img: "",
           duration: "18:52",
         },
       ],
@@ -52,7 +55,7 @@ export default {
           title: "Please Wait...",
           link: "",
           description: "Ben",
-          img: "https://vuejs.org//images/logo.png",
+          img: "",
           duration: "18:52",
         },
       ],
