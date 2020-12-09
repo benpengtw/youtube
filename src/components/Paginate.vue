@@ -98,36 +98,6 @@
       tabindex="0"
       v-html="prevText"
     ></a>
-    <!-- <template v-for="page in pages">
-      <a
-        v-if="page.breakView"
-        :class="[
-          pageLinkClass,
-          breakViewLinkClass,
-          page.disabled ? disabledClass : '',
-        ]"
-        tabindex="0"
-        ><slot name="breakViewContent">{{ breakViewText }}</slot></a
-      >
-      <a
-        v-else-if="page.disabled"
-        :class="[
-          pageLinkClass,
-          page.selected ? activeClass : '',
-          disabledClass,
-        ]"
-        tabindex="0"
-        >{{ page.content }}</a
-      >
-      <a
-        v-else
-        @click="handlePageSelected(page.index + 1)"
-        @keyup.enter="handlePageSelected(page.index + 1)"
-        :class="[pageLinkClass, page.selected ? activeClass : '']"
-        tabindex="0"
-        >{{ page.content }}</a
-      >
-    </template> -->
     <a
       v-if="!(lastPageSelected() && hidePrevNext)"
       @click="nextPage()"
