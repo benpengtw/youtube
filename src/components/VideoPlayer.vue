@@ -37,10 +37,10 @@ export default {
       function onPlayerReady() {
         console.log("onPlayerReady", this);
         this.on("pause", function (event) {
-          store.commit("setIsShow");
+          store.commit("setIsShow", { isShow: true });
         });
         this.on("play", function (event) {
-          store.commit("setIsShow");
+          store.commit("setIsShow", { isShow: false });
         });
       }
     );
