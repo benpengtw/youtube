@@ -1,9 +1,13 @@
 <template>
   <div>
-    <p>title</p>
-    <p>{{ $route.params.title }}</p>
-    <p>description</p>
-    <p>{{ $route.params.description }}</p>
+    <div class="example">
+      <small>影片標題</small>
+      <pre> {{ $route.params.title }}</pre>
+    </div>
+    <div class="example">
+      <small> 影片描述</small>
+      <pre>{{ $route.params.description }}</pre>
+    </div>
     <video-player :options="videoOptions" />
   </div>
 </template>
@@ -37,3 +41,26 @@ export default {
   },
 };
 </script>
+<style lang="less" scoped>
+.examples {
+  display: grid;
+  // grid-template-columns: 1fr 1fr 1fr;
+  // grid-gap: 1rem;
+  margin: 1rem 0;
+}
+
+.example {
+  small {
+    font-size: 18px;
+    padding: 4px;
+    width: 400px;
+    color: #000;
+  }
+  pre {
+    padding: 4px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #03a9f4;
+  }
+}
+</style>

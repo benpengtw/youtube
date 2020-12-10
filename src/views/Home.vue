@@ -10,9 +10,11 @@
         >
           <a v-bind:href="post.link" target="_blank">
             <img v-bind:src="post.img || loadingIcon" />
-            {{ post.title }}
-            <small>影片長度 {{ post.duration }}</small>
-            <small>影片描述 {{ post.description }}</small>
+            <small>{{ post.title }}</small>
+            <small>影片長度</small>
+            <pre>{{ post.duration }}</pre>
+            <small>影片描述</small>
+            <pre>{{ post.description }}</pre>
           </a>
         </router-link>
       </div>
@@ -143,9 +145,18 @@ div#app {
       img {
         height: 100px;
       }
-      small {
+      pre {
         font-size: 10px;
         padding: 4px;
+        width: 400px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+      small {
+        font-size: 18px;
+        padding: 4px;
+        width: 400px;
+        color: #000;
       }
     }
   }
