@@ -2,6 +2,7 @@
   <div id="app">
     <div class="wrapper">
       <div class="card" v-for="post in postList" :key="post.index">
+        <button v-on:click="addLike(post)">加入收藏</button>
         <router-link
           :to="{
             name: 'Player',
@@ -36,6 +37,7 @@ import Paginate from "@/components/Paginate.vue";
 import { listVideo } from "@/api/youtube";
 import moment from "moment";
 import "moment-duration-format";
+import store from "@/store";
 export default {
   name: "Home",
   components: {
@@ -73,6 +75,10 @@ export default {
     this.getList();
   },
   methods: {
+    addLike(post) {
+      console.log(post);
+      store.commit("addToLikeList", { post });
+    },
     clickCallback(pageNum) {
       console.log(pageNum);
       this.postList = this.postListOrigin.slice(
@@ -82,7 +88,6 @@ export default {
     },
     getList() {
       listVideo(this.queryParams).then((response) => {
-        console.log("qq", response);
         this.postListOrigin = response.map((element) => {
           const newPostList = {
             img: element.snippet.thumbnails.medium.url,

@@ -23,7 +23,6 @@ export function listVideo(query) {
   )
     //合併2個長度50的playlist
     .then(function (response) {
-      console.log("YUY", response);
       const listPage1 = response.data.items
       return axios.get(
         "https://youtube.googleapis.com/youtube/v3/videos?",
@@ -40,7 +39,6 @@ export function listVideo(query) {
         },
       )
         .then(function (response) {
-          console.log("RERE", response);
           const listPage2 = response.data.items
           return listPage1.concat(listPage2)
         })
