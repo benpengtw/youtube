@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-if="isShow">我是廣告</div>
+    <div v-if="isShow">
+      我是廣告<img alt="Vue logo" src="../assets/ad.gif" />
+    </div>
 
     <video ref="videoPlayer" class="video-js"></video>
   </div>
