@@ -65,4 +65,6 @@ module.exports = {
       chunks: "all",
     });
   },
+  // vuex数据持久化
+  transpileDependencies: ['vuex-persist']
 };
