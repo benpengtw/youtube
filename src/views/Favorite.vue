@@ -22,7 +22,7 @@
         </router-link>
       </div>
     </div>
-    <paginate
+    <!-- <paginate
       :page-count="9"
       :click-handler="clickCallback"
       :prev-text="'Prev'"
@@ -30,7 +30,7 @@
       :container-class="'pagination'"
       :page-class="'page-item'"
     >
-    </paginate>
+    </paginate> -->
   </div>
 </template>
 
@@ -42,9 +42,9 @@ import "moment-duration-format";
 import store from "@/store";
 export default {
   name: "Favorite",
-  components: {
-    Paginate,
-  },
+  // components: {
+  //   Paginate,
+  // },
   data() {
     return {
       pageNum: 1,
